@@ -31,29 +31,37 @@ function App() {
 
       <Route path="/register" element={<Register/>}/>
       
-      <Route path="/schepic" element={<PrivateRouter>
-        <Schedule/>
+      <Route path="/schepic" element={
+        <PrivateRouter>
+          <Schedule/>
         </PrivateRouter>
-        }/>
+        }
+      />
 
-      <Route path="/profile" element={<PrivateRouter>
-        <Profile/>
+      <Route path="/profile" element={
+        <PrivateRouter>
+          <Profile/>
         </PrivateRouter>
-        }/>
+        }
+      />
 
       <Route path="/tracker" element={<Tracker/>}/>
 
-      <Route path="/manageship" element={<PrivateRouter>
-        <ManageShipments/>
+      <Route path="/manageship" element={
+        <PrivateRouter>
+          <ManageShipments/>
         </PrivateRouter>
-        }/>
+        }
+      />
 
       <Route path="/aboutus" element={<Aboutus/>}/>
 
-      <Route path="/contactus" element={<PrivateRouter>
+      <Route path="/contactus" element={
+        <PrivateRouter>
         <Contactus/>
         </PrivateRouter>
-        }/>
+        }
+      />
 
       <Route path="/findloc" element={<Findloc/>}/>
 

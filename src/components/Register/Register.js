@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Register.css';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import InputAdornment from '@mui/material/InputAdornment';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Navigate, NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Header from '../Header/Header';
 import validator from 'validator';
 import axios from 'axios';
@@ -28,8 +28,35 @@ const Register = () => {
   const [countryError, setCountryError] = useState('');
   const [phoneError, setPhoneError] = useState('');
   const [zipcodeError, setZipcodeError] = useState('');
+  const [stateError, setStateError] = useState('');
   const [formError, setFormError] = useState('');
+  const [validCountries, setValidCountries] = useState({});
+  const [statesData, setStatesData] = useState({});
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchLocationData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8080/country');
+        const data = response.data[0]; 
+        console.log('Fetched location data:', data); 
+
+        
+        const normalizedData = {};
+        for (const [country, states] of Object.entries(data)) {
+          normalizedData[country.toLowerCase()] = states.map(state => state.toLowerCase());
+        }
+
+        setValidCountries(Object.keys(normalizedData));
+        setStatesData(normalizedData);
+      } catch (error) {
+        console.error('Error fetching location data:', error);
+      }
+    };
+
+    fetchLocationData();
+  }, []);
 
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
@@ -65,7 +92,6 @@ const Register = () => {
     const newPassword = e.target.value;
     setPassword(newPassword);
 
-    
     const passwordRegex = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
     if (!passwordRegex.test(newPassword)) {
       setPasswordError('Weak Password');
@@ -87,14 +113,28 @@ const Register = () => {
   };
 
   const handleCountryChange = (e) => {
-    const newCountry = e.target.value;
+    const newCountry = e.target.value.toLowerCase(); 
     setCountry(newCountry);
 
-    const validCountries = ['United States', 'Canada', 'Australia', 'India']; 
     if (!validCountries.includes(newCountry)) {
       setCountryError('Service not available in the entered country');
+      setStateError(''); 
     } else {
       setCountryError('');
+      
+      setState('');
+      setStateError('');
+    }
+  };
+
+  const handleStateChange = (e) => {
+    const newState = e.target.value.toLowerCase(); 
+    setState(newState);
+
+    if (country && (!statesData[country] || !statesData[country].includes(newState))) {
+      setStateError('Invalid state for the selected country');
+    } else {
+      setStateError('');
     }
   };
 
@@ -106,15 +146,14 @@ const Register = () => {
       return;
     }
 
-    if (emailError || passwordError || countryError || phoneError || zipcodeError) {
+    if (emailError || passwordError || countryError || phoneError || zipcodeError || stateError) {
       setFormError('Please fix the errors before submitting');
       return;
     }
 
     try {
       const emailCheckResponse = await axios.get(`http://localhost:8080/users?email=${email}`);
-      console.log(emailCheckResponse);
-      if (emailCheckResponse.data.length>0) {
+      if (emailCheckResponse.data.length > 0) {
         setFormError('Email already exists');
         return;
       }
@@ -234,7 +273,9 @@ const Register = () => {
               variant="filled"
               style={{ width: '150%' }}
               value={state}
-              onChange={(e) => setState(e.target.value)}
+              onChange={handleStateChange}
+              helperText={stateError}
+              error={!!stateError}
             />
             <br /><br />
             <TextField
@@ -279,7 +320,7 @@ const Register = () => {
           <Button variant="contained" size="large" type="submit">Register</Button>
         </center>
       </form>
-      <Footer/>
+      <Footer />
     </div>
   );
 };
