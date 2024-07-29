@@ -12,6 +12,7 @@ import Contactus from "./components/contactus/Contactus";
 import Findloc from "./components/findloc/Findloc";
 import Fuelsurch from "./components/fuelsurch/Fuelsurch";
 import FAQ from "./components/faq/FAQ";
+import Admin from "./components/admin/Admin";
 
 function App() {
   return (
@@ -68,6 +69,12 @@ function App() {
       <Route path="/fuelsurch" element={<Fuelsurch/>}/>
 
       <Route path="/FAQ" element={<FAQ/>}/>
+
+      <Route path="/admin" element={
+        <PrivateRouter>
+        <Admin/>
+        </PrivateRouter>
+        }/>
       
       
 

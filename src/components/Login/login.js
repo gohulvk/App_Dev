@@ -54,7 +54,11 @@ const Login = () => {
         if (user.password === passwordValue) {
           console.log('Login successful');
           login(user);
-          navigate('/');
+          if(user.name==='Admin'){
+            navigate('/admin')
+          }else{
+            navigate('/');
+          }
         } else {
           setPasswordError('Invalid password');
         }
