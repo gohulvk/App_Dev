@@ -1,0 +1,86 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "gohul",
+      "email": "gohul@gmail.com",
+      "password": "123"
+    },
+    {
+      "id": "886e",
+      "name": "Raj",
+      "email": "raj@gmail.com",
+      "phone": "12345678",
+      "password": "Raj*1234",
+      "country": "India",
+      "state": "Tamil Nadu",
+      "zipcode": "62543"
+    },
+    {
+      "id": "c497",
+      "name": "qwerty",
+      "email": "qwerty@gmail.com",
+      "phone": "12343455",
+      "password": "Qwerty*1234",
+      "country": "India",
+      "state": "Tamil Nadu",
+      "zipcode": "637211"
+    }
+  ],
+  "pickup": [
+    {
+      "id": "0ebe",
+      "item": "bottle",
+      "weight": "10ton",
+      "pickUpTime": "8:30",
+      "dropAddress": "qwetgfd"
+    },
+    {
+      "id": "cc0d",
+      "item": "k",
+      "weight": "k",
+      "pickUpTime": "l",
+      "dropAddress": "l"
+    },
+    {
+      "id": "fde4",
+      "item": "k",
+      "weight": "g",
+      "pickUpTime": "f",
+      "dropAddress": "gg",
+      "userId": "1"
+    },
+    {
+      "id": "5c03",
+      "item": "bn",
+      "weight": "06",
+      "pickUpTime": "09:38",
+      "dropAddress": "tg",
+      "userId": "1"
+    },
+    {
+      "id": "8cc3",
+      "item": "k",
+      "weight": "6",
+      "pickUpTime": "23:44",
+      "dropAddress": "hk",
+      "userId": "1"
+    }
+  ],
+  "feedback": [
+    {
+      "id": "8181",
+      "userId": "1",
+      "name": "wer",
+      "email": "jkjj@gmail.com",
+      "message": "kjjjoioiikk"
+    },
+    {
+      "id": "c225",
+      "userId": "1",
+      "name": "gohul",
+      "email": "gohul@gmail.com",
+      "message": "kjkjjj"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+.Headertop{
+    display:flex;
+    justify-content: space-between;
+    flex-direction: row;
+    background-color: rgb(15, 128, 128);
+    padding: 30px;
+
+}
+
+.nearcp{
+    display: flex; 
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.elementhead{
+    padding-right: 50px;
+}
+
