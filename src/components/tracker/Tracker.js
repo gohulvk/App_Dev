@@ -7,7 +7,7 @@ import Footer from '../footer/Footer';
 
 const Tracker = () => {
   const location = useLocation();
-  const { trackerId } = location.state || {};
+  const { orderId } = location.state || {};
   const [pickupData, setPickupData] = useState(null);
   const [error, setError] = useState('');
   const [status, setStatus] = useState('');
@@ -16,25 +16,25 @@ const Tracker = () => {
   useEffect(() => {
     const fetchPickupData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/pickup/${trackerId}`);
+        const response = await axios.get(`http://localhost:8080/pickup/${orderId}`);
         if (response.data) {
           setPickupData(response.data);
           checkPickupStatus(response.data.pickUpTime);
         } else {
-          setError('No information found for the provided tracker ID.');
+          setError('No information found for the provided order ID.');
         }
       } catch (error) {
         console.error('Error fetching pickup data:', error);
-        setError('No information found for the provided tracker ID.');
+        setError('No information found for the provided order ID.');
       }
     };
 
-    if (trackerId) {
+    if (orderId) {
       fetchPickupData();
     } else {
-      setError('No tracker ID provided.');
+      setError('No order ID provided.');
     }
-  }, [trackerId]);
+  }, [orderId]);
 
   const checkPickupStatus = (pickUpTime) => {
     const now = new Date();
@@ -54,11 +54,11 @@ const Tracker = () => {
   return (
     <div>
       <Header />
-      <h2 >Tracking Information</h2>
+      <h2>Tracking Information</h2>
       {error && <p style={{ color: 'red' }}>{error}</p>}
       {pickupData ? (
         <div className="tracker-container">
-          <p className="tracker-info">Tracker ID: {trackerId}</p>
+          <p className="tracker-info">Order ID: {orderId}</p>
           <p className="tracker-info">Item: {pickupData.item}</p>
           <p className="tracker-info">Weight: {pickupData.weight} kg</p>
           <p className="tracker-info">Pick Up Time: {pickupData.pickUpTime}</p>

@@ -25,6 +25,16 @@
       "country": "India",
       "state": "Tamil Nadu",
       "zipcode": "637211"
+    },
+    {
+      "id": "c944",
+      "name": "Gohul V K",
+      "email": "gohul2004@gmail.com",
+      "phone": "9384794599",
+      "password": "Gohul@123",
+      "country": "India",
+      "state": "Tamil Nadu",
+      "zipcode": "637211"
     }
   ],
   "pickup": [
@@ -65,6 +75,14 @@
       "pickUpTime": "23:44",
       "dropAddress": "hk",
       "userId": "1"
+    },
+    {
+      "id": "fc7c",
+      "item": "bag",
+      "weight": "1000",
+      "pickUpTime": "11:37",
+      "dropAddress": "qwertyui",
+      "userId": "c944"
     }
   ],
   "feedback": [

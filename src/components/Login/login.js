@@ -15,7 +15,18 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
+  const [orderId, setOrderId] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+
+  const handleTracklogin = () => {
+    if (!orderId) {
+      setError('Order ID is required');
+      return;
+    }
+    setError('');
+    navigate('/tracker', { state: { orderId } });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,7 +67,6 @@ const Login = () => {
       setPasswordError('Error during login');
     }
   };
-  
 
   const handleEmailChange = (e) => {
     const newEmail = e.target.value;
@@ -97,8 +107,6 @@ const Login = () => {
           </NavLink>
         </p>
         {emailError && <p style={{ color: 'red' }}>{emailError}</p>}
-        
-          
         {passwordError && <p style={{ color: 'red' }}>{passwordError}</p>}
         
         <form onSubmit={handleSubmit}>
@@ -122,6 +130,30 @@ const Login = () => {
           />
           <br /><br />
           <Button variant="contained" size="large" type="submit">Login</Button>
+        </form>
+        <br/><br/>
+        <p className='loginTrack'>
+          Just track the order
+        </p>
+        <form onSubmit={(e) => e.preventDefault()}>
+          <div>
+            <TextField
+              id="orderId"
+              label="Order ID"
+              variant="outlined"
+              style={{ width: '50%' }}
+              value={orderId}
+              onChange={(e) => setOrderId(e.target.value)}
+              error={!!error}
+              helperText={error}
+            />
+          </div>
+          <br />
+          <div>
+            <Button variant="contained" size="large" onClick={handleTracklogin}>
+              Track
+            </Button>
+          </div>
         </form>
       </center>
       <Footer/>

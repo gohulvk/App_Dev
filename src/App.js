@@ -3,7 +3,6 @@ import Login from "./components/Login/login";
 import Register from "./components/Register/Register";
 import Home from "./components/Home/Home";
 import PrivateRouter from "./components/Context/Private_Router";
-import Header from "./components/Header/Header";
 import Schedule from "./components/schedule/Schedule";
 import Profile from "./components/profile/Profile";
 import Tracker from "./components/tracker/Tracker";
@@ -13,7 +12,6 @@ import Contactus from "./components/contactus/Contactus";
 import Findloc from "./components/findloc/Findloc";
 import Fuelsurch from "./components/fuelsurch/Fuelsurch";
 import FAQ from "./components/faq/FAQ";
-import Footer from "./components/footer/Footer";
 
 function App() {
   return (
@@ -28,20 +26,41 @@ function App() {
         }
       />
 
-      <Route path="/home" element={<Home/>}/>
+      
       <Route path="/login" element={<Login/>}/>
+
       <Route path="/register" element={<Register/>}/>
-      <Route path="/header" element={<Header/>}/>
-      <Route path="/schepic" element={<Schedule/>}/>
-      <Route path="/profile" element={<Profile/>}/>
+      
+      <Route path="/schepic" element={<PrivateRouter>
+        <Schedule/>
+        </PrivateRouter>
+        }/>
+
+      <Route path="/profile" element={<PrivateRouter>
+        <Profile/>
+        </PrivateRouter>
+        }/>
+
       <Route path="/tracker" element={<Tracker/>}/>
-      <Route path="/manageship" element={<ManageShipments/>}/>
+
+      <Route path="/manageship" element={<PrivateRouter>
+        <ManageShipments/>
+        </PrivateRouter>
+        }/>
+
       <Route path="/aboutus" element={<Aboutus/>}/>
-      <Route path="/contactus" element={<Contactus/>}/>
+
+      <Route path="/contactus" element={<PrivateRouter>
+        <Contactus/>
+        </PrivateRouter>
+        }/>
+
       <Route path="/findloc" element={<Findloc/>}/>
+
       <Route path="/fuelsurch" element={<Fuelsurch/>}/>
+
       <Route path="/FAQ" element={<FAQ/>}/>
-      <Route path="/footer" element={<Footer/>}/>
+      
       
 
     </Routes>

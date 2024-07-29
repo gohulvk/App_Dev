@@ -8,34 +8,34 @@ import Footer from '../footer/Footer';
 
 const Home = () => {
   const { user } = useContext(UserContext);
-  const [trackerId, setTrackerId] = useState('');
+  const [orderId, setOrderId] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleTrack = () => {
-    if (!trackerId) {
-      setError('Tracker ID is required');
+    if (!orderId) {
+      setError('Order ID is required');
       return;
     }
     setError('');
-    navigate('/tracker', { state: { trackerId } });
+    navigate('/tracker', { state: { orderId } });
   };
 
   return (
     <div>
       <Header />
-      <p className='usrnme'>Welcome user.name</p>
+      <p className='usrnme'>Welcome {user.name}</p>
       <div className='trackerhome'>
         <center>
           <form onSubmit={(e) => e.preventDefault()}>
             <div>
               <TextField
-                id="Trackerid"
-                label="Tracker ID"
+                id="orderId"
+                label="Order ID"
                 variant="outlined"
                 style={{ width: '50%' }}
-                value={trackerId}
-                onChange={(e) => setTrackerId(e.target.value)}
+                value={orderId}
+                onChange={(e) => setOrderId(e.target.value)}
                 error={!!error}
                 helperText={error}
               />
