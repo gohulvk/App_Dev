@@ -31,6 +31,16 @@
       "country": "India",
       "state": "Tamil Nadu",
       "zipcode": "637211"
+    },
+    {
+      "id": "1cb1",
+      "name": "Dummy",
+      "email": "dummy@gmail.com",
+      "phone": "923400334",
+      "password": "Dummy@123",
+      "country": "India",
+      "state": "Tamil Nadu",
+      "zipcode": "637211"
     }
   ],
   "pickup": [
@@ -95,6 +105,14 @@
       "pickUpTime": "19:58",
       "dropAddress": "qwd",
       "userId": "1"
+    },
+    {
+      "id": "652a",
+      "item": "asdf",
+      "weight": "32",
+      "pickUpTime": "14:37",
+      "dropAddress": "wefd",
+      "userId": "1cb1"
     }
   ],
   "feedback": [
@@ -219,8 +237,7 @@
         "Uttar Pradesh",
         "Uttarakhand",
         "West Bengal"
-      ],
-      "id": "9d79"
+      ]
     }
   ]
 }
