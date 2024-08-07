@@ -57,7 +57,7 @@ const Login = () => {
           if(user.name==='Admin'){
             navigate('/admin')
           }else{
-            navigate('/');
+            navigate('/home');
           }
         } else {
           setPasswordError('Invalid password');

@@ -13,20 +13,20 @@ import Findloc from "./components/findloc/Findloc";
 import Fuelsurch from "./components/fuelsurch/Fuelsurch";
 import FAQ from "./components/faq/FAQ";
 import Admin from "./components/admin/Admin";
-
+import Info from "./components/info/Info";
 function App() {
   return (
     <BrowserRouter>
     <Routes>
       <Route
-        path="/"
+        path="/home"
         element={
           <PrivateRouter>
           <Home/>
           </PrivateRouter>
         }
       />
-
+      <Route path='/' element={<Info/>}/>
       
       <Route path="/login" element={<Login/>}/>
 

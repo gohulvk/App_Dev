@@ -13,31 +13,21 @@
       "password": "123"
     },
     {
-      "id": "c497",
-      "name": "qwerty",
-      "email": "qwerty@gmail.com",
-      "phone": "12343455",
-      "password": "Qwerty*1234",
-      "country": "India",
-      "state": "Tamil Nadu",
-      "zipcode": "637211"
-    },
-    {
       "id": "c944",
       "name": "Gohul V K",
       "email": "gohul2004@gmail.com",
       "phone": "9384794599",
-      "password": "Gohul@123",
+      "password": "x  ",
       "country": "India",
       "state": "Tamil Nadu",
       "zipcode": "637211"
     },
     {
-      "id": "1cb1",
-      "name": "Dummy",
-      "email": "dummy@gmail.com",
-      "phone": "923400334",
-      "password": "Dummy@123",
+      "id": "78ff",
+      "name": "Logi",
+      "email": "logi@gmail.cpom",
+      "phone": "1234567891",
+      "password": "Logi*123",
       "country": "India",
       "state": "Tamil Nadu",
       "zipcode": "637211"
@@ -45,74 +35,28 @@
   ],
   "pickup": [
     {
-      "id": "0ebe",
-      "item": "bottle",
-      "weight": "10ton",
-      "pickUpTime": "8:30",
-      "dropAddress": "qwetgfd"
+      "id": "beb1",
+      "item": "werty",
+      "weight": "43",
+      "pickUpTime": "2024-07-30T22:34",
+      "dropAddress": "asdfg",
+      "userId": "1"
     },
     {
-      "id": "cc0d",
-      "item": "k",
-      "weight": "k",
-      "pickUpTime": "l",
-      "dropAddress": "l"
+      "id": "7063",
+      "item": "qwe",
+      "weight": "12",
+      "pickUpTime": "2024-07-29T22:36",
+      "dropAddress": "fghh",
+      "userId": "1"
     },
     {
-      "id": "fc7c",
+      "id": "31eb",
       "item": "bag",
-      "weight": "1000",
-      "pickUpTime": "11:37",
-      "dropAddress": "qwertyui",
-      "userId": "c944"
-    },
-    {
-      "id": "18ed",
-      "item": "bnm",
-      "weight": "8",
-      "pickUpTime": "07:04",
-      "dropAddress": "hhj",
+      "weight": "45",
+      "pickUpTime": "2024-08-31T23:03",
+      "dropAddress": "sdfg",
       "userId": "1"
-    },
-    {
-      "id": "c792",
-      "item": "xdf",
-      "weight": "66",
-      "pickUpTime": "20:05",
-      "dropAddress": "rty",
-      "userId": "1"
-    },
-    {
-      "id": "0c42",
-      "item": "a",
-      "weight": "4",
-      "pickUpTime": "22:51",
-      "dropAddress": "aa",
-      "userId": "1"
-    },
-    {
-      "id": "a8ad",
-      "item": "qwwefd",
-      "weight": "23",
-      "pickUpTime": "21:55",
-      "dropAddress": "asdfghjfhvbebvuyiusdkjbciuegfisjdhbviusgdicjk",
-      "userId": "1"
-    },
-    {
-      "id": "ce1a",
-      "item": "2s",
-      "weight": "2",
-      "pickUpTime": "19:58",
-      "dropAddress": "qwd",
-      "userId": "1"
-    },
-    {
-      "id": "652a",
-      "item": "asdf",
-      "weight": "32",
-      "pickUpTime": "14:37",
-      "dropAddress": "wefd",
-      "userId": "1cb1"
     }
   ],
   "feedback": [
@@ -237,7 +181,8 @@
         "Uttar Pradesh",
         "Uttarakhand",
         "West Bengal"
-      ]
+      ],
+      "id": "77f7"
     }
   ]
 }

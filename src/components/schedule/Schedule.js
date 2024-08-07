@@ -40,21 +40,21 @@ const Schedule = () => {
         dropAddress,
         userId: user.id
       });
-      
+
       // Assuming response.data contains the pickup details, including an ID
       const pickupId = response.data.id;
 
       // Display the ID in the alert message
       alert(`Pickup Scheduled successfully! Your pickup ID is ${pickupId}.`);
-      
+
       setItem('');
       setWeight('');
       setPickUpTime('');
       setDropAddress('');
       setFormError('');
-      
-      navigate('/');
-      
+
+      navigate('/home');
+
     } catch (error) {
       console.error('Error scheduling pickup:', error);
       setFormError('Error scheduling pickup. Please try again.');
@@ -93,11 +93,14 @@ const Schedule = () => {
             id="pickuptime"
             label="Pick Up Time"
             variant="filled"
-            type="time"
-            placeholder='Select the pick-up time'
+            type="datetime-local"
+            placeholder='Select the pick-up date and time'
             style={{ width: '50%' }}
             value={pickUpTime}
             onChange={(e) => setPickUpTime(e.target.value)}
+            InputLabelProps={{
+              shrink: true,
+            }}
           />
           <br/><br/>
           <TextField

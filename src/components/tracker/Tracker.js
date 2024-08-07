@@ -38,12 +38,11 @@ const Tracker = () => {
 
   const checkPickupStatus = (pickUpTime) => {
     const now = new Date();
-    const [hours, minutes] = pickUpTime.split(':');
-    const pickupDateTime = new Date(now.getFullYear(), now.getMonth(), now.getDate(), hours, minutes);
+    const pickupDateTime = new Date(pickUpTime);
 
     if (pickupDateTime <= now) {
       setStatus('Pickup made');
-      const etaTime = new Date(pickupDateTime.getTime() + 2 * 60 * 60 * 1000);
+      const etaTime = new Date(now.getTime() + 2 * 60 * 60 * 1000);
       setEta(etaTime.toLocaleString());
     } else {
       setStatus('Pickup not yet made');
@@ -71,8 +70,7 @@ const Tracker = () => {
       ) : !error ? (
         <p>Loading...</p>
       ) : null}
-
-      <Footer/>
+      <Footer />
     </div>
   );
 }

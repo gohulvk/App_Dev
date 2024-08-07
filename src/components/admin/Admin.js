@@ -2,21 +2,23 @@ import React, { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
 import './Admin.css';
 import DeleteIcon from '@mui/icons-material/Delete';
-import UserContext from '../Context/UserContext'; 
+import UserContext from '../Context/UserContext';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 
 const Admin = () => {
-  const { user } = useContext(UserContext); 
+  const { user } = useContext(UserContext);
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [shipments, setShipments] = useState([]);
   const [error, setError] = useState('');
+  const [openDialog, setOpenDialog] = useState(false);
+  const [userToDelete, setUserToDelete] = useState(null);
 
   useEffect(() => {
-    
     const fetchUsers = async () => {
       try {
         const response = await axios.get('http://localhost:8080/users');
-        const nonAdminUsers = response.data.filter(user => user.name !== 'Admin'); // Filter out admin user
+        const nonAdminUsers = response.data.filter(user => user.name !== 'Admin');
         setUsers(nonAdminUsers);
       } catch (error) {
         console.error('Error fetching users:', error);
@@ -31,10 +33,21 @@ const Admin = () => {
     try {
       await axios.delete(`http://localhost:8080/users/${userId}`);
       setUsers(users.filter(user => user.id !== userId));
+      handleCloseDialog();
     } catch (error) {
       console.error('Error deleting user:', error);
       setError('Error deleting user. Please try again later.');
     }
+  };
+
+  const handleOpenDialog = (user) => {
+    setUserToDelete(user);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setUserToDelete(null);
   };
 
   useEffect(() => {
@@ -54,9 +67,9 @@ const Admin = () => {
     }
   }, [selectedUserId]);
 
-  if (!user || user.name !== 'Admin') { 
+  if (!user || user.name !== 'Admin') {
     return <p className="access-denied">Access Denied</p>;
-}
+  }
 
   return (
     <div className="admin-dashboard">
@@ -66,20 +79,16 @@ const Admin = () => {
         <h2 className="section-title">Users</h2>
         <ul className="user-list">
           {users.map(user => (
-            <li 
-              key={user.id} 
-              className="user-item"
-            >
-              <span 
-                className="user-name"
-                onClick={() => setSelectedUserId(user.id)}
-              >
-                {user.name}
-              </span>
-              <DeleteIcon 
-                className="delete-icon" 
-                onClick={() => handleDeleteUser(user.id)}
-              />
+            <li key={user.id} className="user-item">
+              <div className="user-details" onClick={() => setSelectedUserId(user.id)}>
+                <p><strong>Name:</strong> {user.name}</p>
+                <p><strong>Phone:</strong> {user.phone}</p>
+                <p><strong>Country:</strong> {user.country}</p>
+                <p><strong>State:</strong> {user.state}</p>
+                <p><strong>Zipcode:</strong> {user.zipcode}</p>
+                <p><strong>Email:</strong> {user.email}</p>
+              </div>
+              <DeleteIcon className="delete-icon" onClick={() => handleOpenDialog(user)} />
             </li>
           ))}
         </ul>
@@ -106,6 +115,22 @@ const Admin = () => {
           </ul>
         )}
       </div>
+      <Dialog open={openDialog} onClose={handleCloseDialog}>
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete the user <strong>{userToDelete?.name}</strong>?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => handleDeleteUser(userToDelete.id)} color="secondary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };
