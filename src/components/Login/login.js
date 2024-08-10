@@ -8,9 +8,11 @@ import axios from 'axios';
 import validator from 'validator';
 import Header from '../Header/Header';
 import Footer from '../footer/Footer';
+import { TokenContext } from '../Context/TokenProvider';
 
 const Login = () => {
   const { user, login } = useContext(UserContext);
+  const {token}=useContext(TokenContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
@@ -44,14 +46,17 @@ const Login = () => {
     }
   
     try {
-      const response = await axios.get(
-        `http://localhost:8080/users?email=${emailValue}`
-      );
+      const response = await axios.get(`http://localhost:8000/users/${email}/`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+    });
+      
+      if (response.status===200) {
+        const user = response.data;
   
-      if (response.data.length > 0) {
-        const user = response.data[0];
-  
-        if (user.password === passwordValue) {
+        if (user.passw === passwordValue) {
           console.log('Login successful');
           login(user);
           if(user.name==='Admin'){

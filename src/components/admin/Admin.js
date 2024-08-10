@@ -4,9 +4,12 @@ import './Admin.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import UserContext from '../Context/UserContext';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
+import { TokenContext } from '../Context/TokenProvider';
+import Header from '../Header/Header';
 
 const Admin = () => {
   const { user } = useContext(UserContext);
+  const {token}=useContext(TokenContext);
   const [users, setUsers] = useState([]);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [shipments, setShipments] = useState([]);
@@ -17,7 +20,12 @@ const Admin = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/users');
+        const response = await axios.get('http://localhost:8000/users/',{
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
+        },
+        });
         const nonAdminUsers = response.data.filter(user => user.name !== 'Admin');
         setUsers(nonAdminUsers);
       } catch (error) {
@@ -31,7 +39,12 @@ const Admin = () => {
 
   const handleDeleteUser = async (userId) => {
     try {
-      await axios.delete(`http://localhost:8080/users/${userId}`);
+      await axios.delete(`http://localhost:8000/users/${userId}/`,{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+      },
+      });
       setUsers(users.filter(user => user.id !== userId));
       handleCloseDialog();
     } catch (error) {
@@ -54,8 +67,13 @@ const Admin = () => {
     if (selectedUserId !== null) {
       const fetchShipments = async () => {
         try {
-          const response = await axios.get('http://localhost:8080/pickup');
-          const userShipments = response.data.filter(shipment => shipment.userId === selectedUserId);
+          const response = await axios.get('http://localhost:8000/pickups/',{
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+          },
+          });
+          const userShipments = response.data.filter(shipment => shipment.user === selectedUserId);
           setShipments(userShipments);
         } catch (error) {
           console.error('Error fetching shipments:', error);
@@ -73,6 +91,7 @@ const Admin = () => {
 
   return (
     <div className="admin-dashboard">
+      <Header/>
       <h1 className="dashboard-header">Admin Dashboard</h1>
       {error && <p className="error-message">{error}</p>}
       <div className="users-section">
@@ -107,8 +126,8 @@ const Admin = () => {
                   <p><strong>Order ID:</strong> {shipment.id}</p>
                   <p><strong>Item:</strong> {shipment.item}</p>
                   <p><strong>Weight:</strong> {shipment.weight} kg</p>
-                  <p><strong>Pick Up Time:</strong> {shipment.pickUpTime}</p>
-                  <p><strong>Drop Address:</strong> {shipment.dropAddress}</p>
+                  <p><strong>Pick Up Time:</strong> {shipment.pickuptime}</p>
+                  <p><strong>Drop Address:</strong> {shipment.dropaddress}</p>
                 </div>
               </li>
             ))}

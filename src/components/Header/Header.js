@@ -33,7 +33,7 @@ const Header = () => {
             <NavLink to="/contactus" style={{color:"black", 
             textDecoration:'none',
             fontSize:'25px'
-            }}>{"Contact Us"}</NavLink>
+            }}>{"Feedback"}</NavLink>
             
             </div>
             

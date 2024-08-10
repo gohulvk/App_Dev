@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import UserContext from '../Context/UserContext';
 import Footer from '../footer/Footer';
+import { TokenContext } from '../Context/TokenProvider';
 
 const Schedule = () => {
   const [item, setItem] = useState('');
@@ -15,51 +16,69 @@ const Schedule = () => {
   const [dropAddress, setDropAddress] = useState('');
   const [formError, setFormError] = useState('');
   const { user } = useContext(UserContext);
+  const {token}=useContext(TokenContext);
   const navigate = useNavigate();
 
+  const formatDateTime = (dateTime) => {
+    const date = new Date(dateTime);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+    
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}.000000`;
+  };
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Validate all fields are filled
+  
     if (!item || !weight || !pickUpTime || !dropAddress) {
       setFormError('All fields are required');
       return;
     }
-
-    // Validate weight is a positive number
+  
     if (isNaN(weight) || weight <= 0) {
       setFormError('Please enter a valid weight greater than zero');
       return;
     }
-
+  
+    // Convert pickUpTime to the required format
+    const formattedPickUpTime = formatDateTime(pickUpTime);
+  
     try {
-      const response = await axios.post('http://localhost:8080/pickup', {
+      const response = await axios.post('http://localhost:8000/pickups/', {
         item,
         weight,
-        pickUpTime,
-        dropAddress,
-        userId: user.id
+        pickuptime: formattedPickUpTime,
+        dropaddress:dropAddress,
+        user: user.id
+      },{
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
       });
-
-      // Assuming response.data contains the pickup details, including an ID
+  
       const pickupId = response.data.id;
-
-      // Display the ID in the alert message
+  
       alert(`Pickup Scheduled successfully! Your pickup ID is ${pickupId}.`);
-
+  
       setItem('');
       setWeight('');
       setPickUpTime('');
       setDropAddress('');
       setFormError('');
-
+  
       navigate('/home');
-
+  
     } catch (error) {
-      console.error('Error scheduling pickup:', error);
+      console.error('Error scheduling pickup:', error.response?.data || error.message);
       setFormError('Error scheduling pickup. Please try again.');
     }
   };
+
 
   return (
     <div>
