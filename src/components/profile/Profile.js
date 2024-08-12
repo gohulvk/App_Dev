@@ -66,7 +66,8 @@ const Profile = () => {
   
     try {
       const response = await axios.patch(`http://localhost:8000/users/${user.id}/`,{
-        passw:newPassword
+        passw:newPassword,
+        password:newPassword
       }, {
         headers: {
             'Content-Type': 'application/json',

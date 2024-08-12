@@ -3,6 +3,10 @@ import './login.css';
 import { NavLink, useNavigate } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import UserContext from '../Context/UserContext';
 import axios from 'axios';
 import validator from 'validator';
@@ -12,13 +16,14 @@ import { TokenContext } from '../Context/TokenProvider';
 
 const Login = () => {
   const { user, login } = useContext(UserContext);
-  const {token}=useContext(TokenContext);
+  const { token } = useContext(TokenContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [orderId, setOrderId] = useState('');
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false); // State to manage password visibility
   const navigate = useNavigate();
 
   const handleTracklogin = () => {
@@ -48,20 +53,20 @@ const Login = () => {
     try {
       const response = await axios.get(`http://localhost:8000/users/${email}/`, {
         headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
         },
-    });
+      });
       
-      if (response.status===200) {
+      if (response.status === 200) {
         const user = response.data;
   
         if (user.passw === passwordValue) {
           console.log('Login successful');
           login(user);
-          if(user.name==='Admin'){
-            navigate('/admin')
-          }else{
+          if (user.name === 'Admin') {
+            navigate('/admin');
+          } else {
             navigate('/home');
           }
         } else {
@@ -105,11 +110,15 @@ const Login = () => {
     }
   };
 
+  const handleClickShowPassword = () => {
+    setShowPassword((prev) => !prev); // Toggle password visibility
+  };
+
   return (
     <div>
-      <Header/>
+      <Header />
       <center>
-        <p className="logintitle">Enter your user Id and password to log in</p>
+        <p className="logintitle">Enter your user ID and password to log in</p>
         <p className="logindont">
           <NavLink to="/register" style={{ textDecoration: 'none' }}>
             {"Don't have an account?"}
@@ -132,18 +141,29 @@ const Login = () => {
             id="password"
             label="Password"
             variant="filled"
-            type="password"
+            type={showPassword ? 'text' : 'password'}
             style={{ width: '50%' }}
             value={password}
             onChange={handlePasswordChange}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
           <br /><br />
           <Button variant="contained" size="large" type="submit">Login</Button>
         </form>
-        <br/><br/>
-        <p className='loginTrack'>
-          Just track the order
-        </p>
+        <br /><br />
+        <p className="loginTrack">Just track the order</p>
         <form onSubmit={(e) => e.preventDefault()}>
           <div>
             <TextField
@@ -165,9 +185,9 @@ const Login = () => {
           </div>
         </form>
       </center>
-      <Footer/>
+      <Footer />
     </div>
   );
-}
+};
 
 export default Login;
