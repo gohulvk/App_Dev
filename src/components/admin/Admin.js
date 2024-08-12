@@ -5,8 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import UserContext from '../Context/UserContext';
 import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Button } from '@mui/material';
 import { TokenContext } from '../Context/TokenProvider';
-import Header from '../Header/Header';
-
+import { useNavigate } from 'react-router-dom';
 const Admin = () => {
   const { user } = useContext(UserContext);
   const {token}=useContext(TokenContext);
@@ -16,6 +15,8 @@ const Admin = () => {
   const [error, setError] = useState('');
   const [openDialog, setOpenDialog] = useState(false);
   const [userToDelete, setUserToDelete] = useState(null);
+  const navigate=useNavigate()
+  
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -37,6 +38,9 @@ const Admin = () => {
     fetchUsers();
   }, []);
 
+  const handlefeed=()=>{
+    navigate('/adminfeed');
+  }
   const handleDeleteUser = async (userId) => {
     try {
       await axios.delete(`http://localhost:8000/users/${userId}/`,{
@@ -91,8 +95,15 @@ const Admin = () => {
 
   return (
     <div className="admin-dashboard">
-      <Header/>
-      <h1 className="dashboard-header">Admin Dashboard</h1>
+      <div className='adminfeed'>
+        <div>
+        <h1 className="dashboard-header">Admin Dashboard</h1></div>
+        <div>
+        <Button variant="contained" size="small" onClick={handlefeed}>
+          view Feedback
+        </Button>
+        </div>
+      </div>
       {error && <p className="error-message">{error}</p>}
       <div className="users-section">
         <h2 className="section-title">Users</h2>

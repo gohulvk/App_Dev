@@ -14,6 +14,7 @@ import Fuelsurch from "./components/fuelsurch/Fuelsurch";
 import FAQ from "./components/faq/FAQ";
 import Admin from "./components/admin/Admin";
 import Info from "./components/info/Info";
+import Adminfeed from "./components/adminfeed/Adminfeed";
 function App() {
   return (
     <BrowserRouter>
@@ -75,7 +76,11 @@ function App() {
         <Admin/>
         </PrivateRouter>
         }/>
-      
+      <Route path="/adminfeed" element={
+        <PrivateRouter>
+        <Adminfeed/>
+        </PrivateRouter>
+        }/>
       
 
     </Routes>
