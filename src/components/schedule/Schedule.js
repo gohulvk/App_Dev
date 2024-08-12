@@ -16,7 +16,7 @@ const Schedule = () => {
   const [dropAddress, setDropAddress] = useState('');
   const [formError, setFormError] = useState('');
   const { user } = useContext(UserContext);
-  const {token}=useContext(TokenContext);
+  const { token } = useContext(TokenContext);
   const navigate = useNavigate();
 
   const formatDateTime = (dateTime) => {
@@ -43,8 +43,15 @@ const Schedule = () => {
       setFormError('Please enter a valid weight greater than zero');
       return;
     }
+
+    const currentDateTime = new Date();
+    const selectedDateTime = new Date(pickUpTime);
+
+    if (selectedDateTime < currentDateTime) {
+      setFormError('Pick-up time cannot be in the past');
+      return;
+    }
   
-    // Convert pickUpTime to the required format
     const formattedPickUpTime = formatDateTime(pickUpTime);
   
     try {
@@ -52,9 +59,9 @@ const Schedule = () => {
         item,
         weight,
         pickuptime: formattedPickUpTime,
-        dropaddress:dropAddress,
+        dropaddress: dropAddress,
         user: user.id
-      },{
+      }, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
@@ -63,7 +70,7 @@ const Schedule = () => {
   
       const pickupId = response.data.id;
   
-      alert(`Pickup Scheduled successfully! Your pickup ID is ${pickupId}.`);
+      alert(`Pickup scheduled successfully! Your pickup ID is ${pickupId}.`);
   
       setItem('');
       setWeight('');
@@ -78,7 +85,6 @@ const Schedule = () => {
       setFormError('Error scheduling pickup. Please try again.');
     }
   };
-
 
   return (
     <div>

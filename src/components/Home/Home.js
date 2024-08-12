@@ -53,7 +53,7 @@ const Home = () => {
       <div className='homemangefet'>
         <div className='pickupshe'>
           <p className='pickupshetex'>
-            <NavLink to="/schepic" style={{ textDecoration: 'none', color: "rgb(118, 118, 159)" }}>
+            <NavLink to="/schepic" style={{ textDecoration: 'none', color: "rgb(118, 118, 159)",fontSize:"20px" }}>
               Schedule Pickup
             </NavLink>
           </p>
